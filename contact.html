@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Long Hải Esport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome cho icon -->
+    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* ===== GLOBAL ===== */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #111;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            margin: 0;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            display: flex;
+            justify-content: flex-start;
+            /* Nút home bên trái */
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header nav a {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: #fff;
+            color: #111;
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        header nav a span {
+            position: relative;
+            z-index: 1;
+        }
+
+        header nav a:hover {
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.4);
+        }
+
+        header nav a::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 8px;
+            background: linear-gradient(270deg, #ff0000, #ffffff, #000000, #ff0000);
+            background-size: 300% 300%;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        header nav a:hover::before {
+            opacity: 1;
+            animation: ledMove 2s linear infinite;
+        }
+
+        @keyframes ledMove {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 300% 50%;
+            }
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: url('./img/bglhe.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            margin: 40px;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-content h2 {
+            position: relative;
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            z-index: 1;
+        }
+
+        .hero-content p {
+            position: relative;
+            color: #ddd;
+            margin-top: 12px;
+            font-size: 1.2rem;
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact-section {
+            padding: 80px 20px;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .contact-section p {
+            color: #555;
+            font-size: 1rem;
+            margin-bottom: 40px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .contact-info a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background-color: #f9f9f9;
+            color: #111;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            background-color: #ff3c3c;
+            color: #fff;
+        }
+
+        .contact-info i {
+            font-size: 1.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-info a:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Video responsive */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 12px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ===== CONTACT FORM ===== */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto 80px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #ff3c3c;
+            box-shadow: 0 0 10px rgba(255, 60, 60, 0.3);
+        }
+
+        .contact-form button {
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            background-color: #ff3c3c;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: #e63636;
+            transform: scale(1.03);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background-color: #111;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 768px) {
+            .contact-info {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="led-border"><span>Home</span></a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>Liên Hệ Với Chúng Tôi</h2>
+            <p>Hãy kết nối với đội ngũ Long Hải Esport thông qua các kênh dưới đây</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <h2>Liên Hệ Với Chúng Tôi</h2>
+        <p>Bạn có thể liên hệ với chúng tôi qua Email, Facebook hoặc YouTube.</p>
+
+        <div class="contact-info">
+            <a href="mailto:longhaiesport@gmail.com">
+                <i class="fas fa-envelope text-red-600"></i>
+                <span>longhaiesport@gmail.com</span>
+            </a>
+            <a href="https://www.facebook.com/longhaiesport" target="_blank">
+                <i class="fab fa-facebook text-blue-600"></i>
+                <span>Facebook: Long Hải Esport</span>
+            </a>
+            <a href="https://www.youtube.com/@longhaiesport" target="_blank">
+                <i class="fab fa-youtube text-red-600"></i>
+                <span>YouTube: Long Hải Esport</span>
+            </a>
+        </div>
+
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/3zNgnGxZcOI?si=v_wRL6lBzcEnIoAn"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="contact-form">
+        <form>
+            <input type="text" placeholder="Họ và tên" required>
+            <input type="email" placeholder="Email" required>
+            <textarea rows="5" placeholder="Nội dung liên hệ" required></textarea>
+            <button type="submit">Gửi</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        © 2025 Long Hải Esport | All Rights Reserved
+    </footer>
+
+</body>
+
+</html>
