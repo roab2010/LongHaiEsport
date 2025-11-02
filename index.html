@@ -533,6 +533,108 @@
             }
         }
 
+        /* === Hiệu ứng riêng cho Xun Won (Nguyễn Anh Xuân Quân) === */
+        .team-member:nth-child(4) {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Khi hover vào Xun Won — chuyển LED sang màu xanh lục */
+        .team-member:nth-child(4):hover::before {
+            background: linear-gradient(120deg, #00ff88, #00cc66, #00ff88);
+            box-shadow: 0 0 25px rgba(0, 255, 100, 0.6);
+            animation: ledBorderGreen 3s linear infinite;
+        }
+
+        /* Ánh sáng xanh lục phủ lên */
+        .team-member:nth-child(4):hover::after {
+            background: radial-gradient(circle at center, rgba(0, 255, 100, 0.25), transparent 70%);
+            box-shadow: 0 0 30px rgba(0, 255, 150, 0.3);
+        }
+
+        /* Chữ chuyển màu xanh lục */
+        .team-member:nth-child(4):hover h3 {
+            color: #00ff99 !important;
+        }
+
+        /* === RẮN ĐỘC === */
+        .team-member:nth-child(4)::after,
+        .team-member:nth-child(4)::before {
+            transition: all 0.4s ease;
+        }
+
+        /* Tạo rắn độc bò qua màn */
+        .team-member:nth-child(4) .snake {
+            position: absolute;
+            content: "";
+            width: 120%;
+            height: 80px;
+            background: radial-gradient(circle at center, #00ff99 0%, #006633 90%);
+            border-radius: 50%;
+            top: 110%;
+            left: -10%;
+            opacity: 0;
+            transform: rotate(-10deg);
+            filter: blur(2px);
+            animation: none;
+            z-index: 3;
+        }
+
+        /* Khi hover thì rắn bò lên */
+        .team-member:nth-child(4):hover .snake {
+            opacity: 1;
+            animation: snakeMove 2.2s ease-in-out forwards;
+        }
+
+        /* === Keyframes === */
+
+        /* LED viền xanh chạy quanh */
+        @keyframes ledBorderGreen {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Hiệu ứng rắn bò */
+        @keyframes snakeMove {
+            0% {
+                top: 110%;
+                left: -20%;
+                opacity: 0;
+                transform: rotate(-15deg);
+            }
+
+            25% {
+                opacity: 1;
+                top: 70%;
+                left: 0%;
+            }
+
+            50% {
+                top: 40%;
+                left: 20%;
+            }
+
+            75% {
+                top: 10%;
+                left: 40%;
+            }
+
+            100% {
+                top: -20%;
+                left: 70%;
+                opacity: 0;
+                transform: rotate(10deg);
+            }
+        }
 
 
         footer {
@@ -667,6 +769,9 @@
             <div class="team-member">
                 <div class="led-frame">
                     <img src="./img/quan.png" alt="Nguyễn Anh Xuân Quân">
+                    <div class="snake"></div>
+                    <audio id="snake-sound" src="./audio/randoc.mp3" preload="auto"></audio>
+
                     <span class="rail top"></span>
                     <span class="rail right"></span>
                     <span class="rail bottom"></span>
@@ -743,6 +848,29 @@
                 if (rect.top < window.innerHeight - 60) member.classList.add('reveal');
             });
         });
+
+        // Chọn đúng phần tử Xun Won
+        const xunWonCard = document.querySelectorAll('.team-member')[3];
+        const snakeSound = document.getElementById('snake-sound');
+
+        // Chờ người dùng click lần đầu -> cho phép phát âm thanh
+        let userInteracted = false;
+        document.addEventListener('click', () => userInteracted = true);
+        document.addEventListener('keydown', () => userInteracted = true);
+
+        if (xunWonCard && snakeSound) {
+            xunWonCard.addEventListener('mouseenter', () => {
+                if (!userInteracted) return; // nếu chưa click thì không phát
+                snakeSound.currentTime = 0;
+                snakeSound.volume = 0.8;
+                snakeSound.play().catch(err => console.warn("Lỗi phát âm thanh:", err));
+            });
+
+            xunWonCard.addEventListener('mouseleave', () => {
+                snakeSound.pause();
+                snakeSound.currentTime = 0;
+            });
+        }
     </script>
 
 
