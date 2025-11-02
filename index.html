@@ -743,8 +743,14 @@
             </div>
 
             <div class="team-member">
-                <div class="led-frame">
-                    <img src="./img/bao.png" alt="Lâm Quốc Bảo">
+                <div class="led-frame" style="position: relative; overflow: hidden;">
+                    <img src="./img/bao.png" alt="Lâm Quốc Bảo"
+                        style="display: block; width: 100%; height: 300px; object-fit: cover;">
+
+                    <video id="bao-video"
+                        style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; display: none;">
+                        <source src="./video/bao.mp4" type="video/mp4">
+                    </video>
                     <span class="rail top"></span>
                     <span class="rail right"></span>
                     <span class="rail bottom"></span>
@@ -871,6 +877,38 @@
                 snakeSound.currentTime = 0;
             });
         }
+
+
+
+        let interactionDone = false;
+
+        // 1 click đầu tiên unlock autoplay âm thanh
+        document.body.addEventListener('click', () => {
+            interactionDone = true;
+        }, { once: true });
+
+        // Chọn thẻ Lâm Quốc Bảo
+        const baoCard = document.querySelectorAll('.team-member')[1]; // thứ 2 trong danh sách
+        const baoVideo = document.getElementById('bao-video');
+
+        // Khi hover vào card
+        baoCard.addEventListener('mouseenter', () => {
+            if (interactionDone) {
+                baoVideo.style.display = 'block';
+                baoVideo.currentTime = 0;
+                baoVideo.play().catch(() => { }); // tránh lỗi auto-play
+            }
+        });
+
+        // Khi rời hover
+        baoCard.addEventListener('mouseleave', () => {
+            baoVideo.pause();
+            baoVideo.currentTime = 0;
+            baoVideo.style.display = 'none';
+        });
+
+
+
     </script>
 
 
