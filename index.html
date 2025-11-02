@@ -745,10 +745,11 @@
             <div class="team-member">
                 <div class="led-frame" style="position: relative; overflow: hidden;">
                     <img src="./img/bao.png" alt="Lâm Quốc Bảo"
-                        style="display: block; width: 100%; height: 300px; object-fit: cover; border-radius: 18px 18px 0 0;">
+                        style="display: block; width: 100%; height: 300px; object-fit: cover;">
 
-                    <video id="bao-video" preload="auto"
-                        style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; border-radius: 18px 18px 0 0; opacity:0; transition: opacity 0.4s ease;">
+                    <!-- Video luôn muted để autoplay hover -->
+                    <video id="bao-video" muted
+                        style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; display: none;">
                         <source src="./video/bao.mp4" type="video/mp4">
                     </video>
 
@@ -760,6 +761,7 @@
                 <h3>JumBo00</h3>
                 <p>Lâm Quốc Bảo</p>
             </div>
+
 
             <div class="team-member">
                 <div class="led-frame">
@@ -856,21 +858,40 @@
             });
         });
 
-        // Chọn đúng phần tử Xun Won
+        // ---------------------------
+        // Snake sound (Xun Won)
+        // ---------------------------
         const xunWonCard = document.querySelectorAll('.team-member')[3];
         const snakeSound = document.getElementById('snake-sound');
 
-        // Chờ người dùng click lần đầu -> cho phép phát âm thanh
-        let userInteracted = false;
-        document.addEventListener('click', () => userInteracted = true);
-        document.addEventListener('keydown', () => userInteracted = true);
+        // ---------------------------
+        // Video Lâm Quốc Bảo
+        // ---------------------------
+        const baoCard = document.querySelectorAll('.team-member')[1];
+        const baoVideo = document.getElementById('bao-video');
 
+        let interactionDone = false;
+
+        // 1 click/keydown đầu tiên unlock audio/video
+        function unlockAudio() {
+            interactionDone = true;
+            console.log("Người dùng đã click/keydown, audio có thể phát");
+            document.body.removeEventListener('click', unlockAudio);
+            document.body.removeEventListener('keydown', unlockAudio);
+        }
+
+        document.body.addEventListener('click', unlockAudio);
+        document.body.addEventListener('keydown', unlockAudio);
+
+        // ---------------------------
+        // Snake hover
+        // ---------------------------
         if (xunWonCard && snakeSound) {
             xunWonCard.addEventListener('mouseenter', () => {
-                if (!userInteracted) return; // nếu chưa click thì không phát
+                if (!interactionDone) return;
                 snakeSound.currentTime = 0;
                 snakeSound.volume = 0.8;
-                snakeSound.play().catch(err => console.warn("Lỗi phát âm thanh:", err));
+                snakeSound.play().catch(err => console.warn("Lỗi phát snake audio:", err));
             });
 
             xunWonCard.addEventListener('mouseleave', () => {
@@ -879,33 +900,36 @@
             });
         }
 
-        // Chọn thẻ Lâm Quốc Bảo
-        const baoCard = document.querySelectorAll('.team-member')[1]; // thứ 2 trong danh sách
-        const baoVideo = document.getElementById('bao-video');
-
-        // Mute video lúc đầu để autoplay không bị chặn
-        baoVideo.muted = true;
-        baoVideo.loop = true; // nếu muốn lặp lại liên tục
-
-        // Khi hover vào card
+        // ---------------------------
+        // Bao video hover
+        // ---------------------------
         baoCard.addEventListener('mouseenter', () => {
-            baoVideo.style.opacity = 1;  // hiện video
-            baoVideo.play().catch(() => { }); // tránh lỗi auto-play
-
-            // Bật âm thanh sau khi play (một số trình duyệt cho phép)
-            baoVideo.muted = false;
+            baoVideo.style.display = 'block';
+            baoVideo.currentTime = 0;
+            baoVideo.play().catch(() => { }); // muted autoplay luôn ok
+            if (interactionDone) {
+                baoVideo.muted = false; // bật âm thanh nếu user đã click
+            }
         });
 
-        // Khi rời hover
         baoCard.addEventListener('mouseleave', () => {
             baoVideo.pause();
             baoVideo.currentTime = 0;
-            baoVideo.style.opacity = 0;  // ẩn video
+            baoVideo.style.display = 'none';
+            baoVideo.muted = true; // mute lại khi rời hover
         });
 
-
-
+        // Click trực tiếp vào video cũng bật âm thanh
+        baoVideo.addEventListener('click', () => {
+            if (!interactionDone) {
+                alert("Hãy click bất kỳ đâu trên trang trước để bật âm thanh video");
+                return;
+            }
+            baoVideo.muted = false;
+            baoVideo.play();
+        });
     </script>
+
 
 
     <style>
