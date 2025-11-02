@@ -798,8 +798,16 @@
         <div class="team-grid">
             <!-- repeat for each member -->
             <div class="team-member">
-                <div class="led-frame">
-                    <img src="./img/chien.png" alt="Nguyễn Minh Chiến">
+                <div class="led-frame" style="position: relative; overflow: hidden;">
+                    <img src="./img/chien.png" alt="Nguyễn Minh Chiến"
+                        style="display: block; width: 100%; height: 300px; object-fit: cover;">
+
+                    <!-- Video luôn muted để autoplay hover -->
+                    <video id="chien-video" muted
+                        style="position: absolute; top:0; left:0; width:100%; height:100%; object-fit: cover; display: none;">
+                        <source src="./video/chien.mp4" type="video/mp4">
+                    </video>
+
                     <span class="rail top"></span>
                     <span class="rail right"></span>
                     <span class="rail bottom"></span>
@@ -951,11 +959,16 @@
         // ---------------------------
         // Video Lâm Quốc Bảo
         // ---------------------------
+
+        const chienCard = document.querySelectorAll('.team-member')[0];
+        const chienVideo = document.getElementById('chien-video');
+
         const baoCard = document.querySelectorAll('.team-member')[1];
         const baoVideo = document.getElementById('bao-video');
 
         const nhanCard = document.querySelectorAll('.team-member')[4];
         const nhanVideo = document.getElementById('nhan-video');
+
         const taiCard = document.querySelectorAll('.team-member')[5];
         const taiVideo = document.getElementById('tai-video');
 
@@ -994,6 +1007,33 @@
         // ---------------------------
         // Bao video hover
         // ---------------------------
+
+        chienCard.addEventListener('mouseenter', () => {
+            chienVideo.style.display = 'block';
+            chienVideo.currentTime = 0;
+            chienVideo.play().catch(() => { }); // muted autoplay luôn ok
+            if (interactionDone) {
+                chienVideo.muted = false; // bật âm thanh nếu user đã click
+            }
+        });
+
+        chienCard.addEventListener('mouseleave', () => {
+            chienVideo.pause();
+            chienVideo.currentTime = 0;
+            chienVideo.style.display = 'none';
+            chienVideo.muted = true; // mute lại khi rời hover
+        });
+
+        // Click trực tiếp vào video cũng bật âm thanh
+        chienVideo.addEventListener('click', () => {
+            if (!interactionDone) {
+                alert("Hãy click bất kỳ đâu trên trang trước để bật âm thanh video");
+                return;
+            }
+            chienVideo.muted = false;
+            chienVideo.play();
+        });
+
         baoCard.addEventListener('mouseenter', () => {
             baoVideo.style.display = 'block';
             baoVideo.currentTime = 0;
