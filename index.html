@@ -640,6 +640,62 @@
             scroll-behavior: smooth;
         }
 
+        .team-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* chữ ở giữa */
+            gap: 10px;
+            /* khoảng cách giữa chữ và nút loa */
+            margin-bottom: 20px;
+        }
+
+        /* Nút loa */
+        /* Nút loa lớn hơn và xích sang phải */
+        .music-button {
+            background-color: #ff3c3c;
+            border: none;
+            width: 60px;
+            /* tăng từ 50px lên 60px */
+            height: 60px;
+            /* tăng từ 50px lên 60px */
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            padding: 0;
+            margin-left: 20px;
+            /* xích sang phải nhiều hơn */
+        }
+
+        .music-button:hover {
+            background-color: #e63636;
+            transform: scale(1.05);
+        }
+
+        .music-button img {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 12px;
+            /* bo góc ảnh */
+            pointer-events: none;
+        }
+
+
+        /* Bo góc ảnh profile team-member */
+        .team-member img {
+            border-radius: 12px;
+            /* bo góc mềm mại cho ảnh */
+        }
+
+
+
+
+
+
         footer {
             background-color: #111;
             color: white;
@@ -726,7 +782,12 @@
     <!-- section 2 -->
     <!-- section 2 (TEAM) - REPLACE YOUR OLD TEAM SECTION WITH THIS -->
     <section class="team-section" id="team">
-        <h2>Gặp Gỡ Các Thành Viên Của Chúng Tôi</h2>
+        <div class="team-header">
+            <h2>Gặp Gỡ Các Thành Viên Của Chúng Tôi</h2>
+            <button class="music-button" id="team-music">
+                <img src="./img//loa.jpg" alt="Volume Icon">
+            </button>
+        </div>
         <p class="team-subtitle">
             Chúng tôi hướng tới việc xây dựng một cộng đồng thể thao điện tử phát triển, nơi người chơi có thể thể hiện
             kỹ năng và thành tích của mình.
@@ -931,6 +992,23 @@
             }
             baoVideo.muted = false;
             baoVideo.play();
+        });
+
+
+        const teamBtn = document.getElementById('team-music-btn');
+        const teamAudio = document.getElementById('team-audio');
+        let isPlaying = false;
+
+        teamBtn.addEventListener('click', () => {
+            if (!isPlaying) {
+                teamAudio.play();
+                isPlaying = true;
+                teamBtn.innerHTML = '<i class="fas fa-volume-mute"></i>'; // đổi icon
+            } else {
+                teamAudio.pause();
+                isPlaying = false;
+                teamBtn.innerHTML = '<i class="fas fa-volume-up"></i>'; // đổi icon
+            }
         });
     </script>
 
